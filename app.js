@@ -6,12 +6,16 @@ const tasks = require("./routers/task");
 const errorHandlingMiddleware = require("./middleware/error-handling");
 
 //middleware
-app.use(express.static("./public"));	//deploys the html website
+app.use(express.static("./public")); //deploys the html website
 app.use(errorHandlingMiddleware);
 app.use(express.json());
 
 //route
 app.use("/api/v1/tasks", tasks);
+
+app.get("/", (req, res) => {
+  res.status(200).send("All routes are available at /api/v1/tasks: <a>GET</a>");
+});
 
 app.get("*", (req, res) => {
   res.status(404).send("Route does not exits");

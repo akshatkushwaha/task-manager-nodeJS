@@ -4,8 +4,11 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 const tasks = require("./routers/task");
 const errorHandlingMiddleware = require("./middleware/error-handling");
+const serverless = require("serverless-http");
+const cors = require("cors");
 
 //middleware
+app.use(cors());
 app.use(express.static("./public")); //deploys the html website
 app.use(errorHandlingMiddleware);
 app.use(express.json());
@@ -34,6 +37,9 @@ const start = async () => {
 };
 
 start();
+
+module.exports = app;
+module.exports.handler = serverless(app);
 
 // app.get('/api/v1/tasks')    --get all the task
 // app.post('/api/v1/tasks')    --create new task
